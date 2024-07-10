@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>p5-raycast Example</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+  <script src="https://raw.githubusercontent.com/camelCaseSensitive/p5-raycast/main/raycast.js"></script>
+</head>
+<body>
+  <script>
+    let raycaster;
+    let objectPosition = [0, 0, 0];
+    let objectRadius = 50;
+    let hit = false;
+    setup();
+
+    function setup() {
+      createCanvas(800, 600, WEBGL);
+      raycaster = new Raycaster();
+    }
+
+    function draw() {
+      background(200);
+
+      let rayDistance = 1000; // Length of the ray
+
+      // Check for ray intersection
+      hit = raycaster.raycast(rayDistance, objectPosition, objectRadius);
+
+      // Draw the object
+      push();
+      translate(objectPosition[0], objectPosition[1], objectPosition[2]);
+      if (hit) {
+        fill(255, 0, 0); // Red if hit
+      } else {
+        fill(0, 255, 0); // Green if not hit
+      }
+      sphere(objectRadius);
+      pop();
+    }
+
+    function mouseMoved() {
+      // Update the raycaster with the new mouse position
+      raycaster.update(mouseX, mouseY);
+    }
+  </script>
+</body>
+</html>
